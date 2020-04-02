@@ -6,6 +6,7 @@ const FooterWrap = styled.div`
   width: 100%;
   background-color: var(--light);
   padding: 20px 0;
+  margin-top: 5em;
   & p {
     font-size: 12px;
     margin: 0;

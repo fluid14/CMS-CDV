@@ -7,6 +7,12 @@ import BlogView from 'views/BlogView';
 import AboutUsView from 'views/AboutUsView';
 import ContactView from 'views/ContactView';
 import GalleryTemplate from 'views/templates/GalleryTemplate';
+import SimpleTextTemplate from 'views/templates/SimpleTextTemplate';
+import ArticleTemplate from 'views/templates/ArticleTemplate';
+import ArticleTilesTemplate from 'views/templates/ArticleTilesTemplate';
+import ArticleBottomTileTemplate from 'views/templates/ArticleBottomTileTemplate';
+import IlustratedArticleTemplate from 'views/templates/IlustratedArticleTemplate';
+import HeroTemplate from 'views/templates/HeroTemplate';
 
 const App = () => (
   <BrowserRouter>
@@ -18,7 +24,17 @@ const App = () => (
         <Route exact path="/blog" component={BlogView} />
         <Route exact path="/about" component={AboutUsView} />
         <Route exact path="/contact" component={ContactView} />
-        <Route exact path="/blog/gallery-template/:id" component={GalleryTemplate} />
+        <Route exact path="/blog/gallery/:id" component={GalleryTemplate} />
+        <Route exact path="/blog/simple-text/:id" component={SimpleTextTemplate} />
+        <Route exact path="/blog/article/:id" component={ArticleTemplate} />
+        <Route exact path="/blog/article-tiles/:id" component={ArticleTilesTemplate} />
+        <Route exact path="/blog/article-bottom-tile/:id" component={ArticleBottomTileTemplate} />
+        <Route exact path="/blog/hero/:id" component={HeroTemplate} />
+        <Route
+          exact
+          path="/blog/ilustrated-article-bottom-tile/:id"
+          component={IlustratedArticleTemplate}
+        />
       </Switch>
     </GlobalTemplate>
   </BrowserRouter>
