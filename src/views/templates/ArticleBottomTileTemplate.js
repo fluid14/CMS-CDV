@@ -15,7 +15,7 @@ const ArticleBottomTileTemplate = () => (
       </HeroImage>
       <Container>
         <SectionWrap>
-          <MainTitle>Tutaj jakiś tytuł</MainTitle>
+          <MainTitle>Tytuł</MainTitle>
           <Paragraph>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla sit quia qui ratione
             earum architecto, facere pariatur deleniti at omnis, commodi laudantium voluptate rem

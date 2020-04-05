@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const TitleText = styled.h1`
   display: inline-block;
-  border-bottom: ${({ border }) => (border ? '2px solid var(--teal)' : 'none')};
+  border-bottom: ${({ border }) => (border ? '2px solid var(--info)' : 'none')};
   text-transform: uppercase;
   font-weight: 700;
 `;

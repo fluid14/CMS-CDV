@@ -11,7 +11,7 @@ const SimpleTextTemplate = () => (
     <HeroImage imgSrc="https://source.unsplash.com/random/1280x500" />
     <Container>
       <SectionWrap>
-        <MainTitle>Tutaj jeszcze jeden tytuł</MainTitle>
+        <MainTitle>Tytuł</MainTitle>
         <Paragraph>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est tenetur asperiores nulla
           neque et reprehenderit repellat expedita fuga illum reiciendis vero nisi quasi similique
