@@ -25,7 +25,7 @@ const HeroTemplate = () => (
       <Container>
         <SectionWrap>
           <MainTitle>
-            <>Tutaj jeszcze jeden tytuł</>
+            <>Tytuł</>
           </MainTitle>
           <Row>
             <Col md="4" className="mt-5">

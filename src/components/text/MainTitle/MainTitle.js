@@ -8,13 +8,19 @@ const Wrap = styled.div`
   text-align: center;
 `;
 
-const MainTitle = ({ children }) => (
-  <Wrap>
+const MainTitle = ({ children, className }) => (
+  <Wrap className={className}>
     <Title>{children}</Title>
   </Wrap>
 );
 
 MainTitle.propTypes = {
   children: PropTypes.element.isRequired,
+  className: PropTypes.string,
 };
+
+MainTitle.defaultProps = {
+  className: '',
+};
+
 export default MainTitle;

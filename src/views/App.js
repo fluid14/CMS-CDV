@@ -13,6 +13,10 @@ import ArticleTilesTemplate from 'views/templates/ArticleTilesTemplate';
 import ArticleBottomTileTemplate from 'views/templates/ArticleBottomTileTemplate';
 import IlustratedArticleTemplate from 'views/templates/IlustratedArticleTemplate';
 import HeroTemplate from 'views/templates/HeroTemplate';
+import SliderTemplate from 'views/templates/SliderTemplate';
+import AllArticlesView from 'views/AllArticlesView';
+import ChooseArticleView from 'views/ChooseArticleView';
+import NewArticleView from 'views/NewArticleView';
 
 const App = () => (
   <BrowserRouter>
@@ -30,11 +34,15 @@ const App = () => (
         <Route exact path="/blog/article-tiles/:id" component={ArticleTilesTemplate} />
         <Route exact path="/blog/article-bottom-tile/:id" component={ArticleBottomTileTemplate} />
         <Route exact path="/blog/hero/:id" component={HeroTemplate} />
+        <Route exact path="/blog/slider/:id" component={SliderTemplate} />
         <Route
           exact
           path="/blog/ilustrated-article-bottom-tile/:id"
           component={IlustratedArticleTemplate}
         />
+        <Route exact path="/new/choose-article" component={ChooseArticleView} />
+        <Route exact path="/blog/all-articles/:id" component={AllArticlesView} />
+        <Route exact path="/new/:id" component={NewArticleView} />
       </Switch>
     </GlobalTemplate>
   </BrowserRouter>
