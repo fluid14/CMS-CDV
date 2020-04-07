@@ -1,11 +1,19 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Formik } from 'formik';
+import { withRouter } from 'react-router-dom';
 import MainTemplate from 'templates/MainTemplate';
-import { Container, Row, Col, Button, Input } from 'reactstrap';
+import { Container, Row } from 'reactstrap';
 import WithoutHeroImg from 'components/Helpers/WithoutHeroImg';
 import Title from 'components/text/Title/Title';
+import GalleryForm from 'views/forms/GalleryForm';
+import HeroForm from 'views/forms/HeroForm';
+import SimpleTextForm from './forms/SimpleTextForm';
+import IlustratedArticleForm from './forms/IlustratedArticleForm';
+import SliderForm from './forms/SliderForm';
+import ArticleForm from './forms/ArticleForm';
+import ArticleTilesForm from './forms/ArticleTilesForm';
+import ArticleBottomTileForm from './forms/ArticleBottomTileForm';
 
 const StyledContainer = styled(Container)`
   min-height: calc(100vh - 58px - 56px - 4em - 5em);
@@ -18,84 +26,75 @@ const LayoutName = styled.p`
   color: var(--dark);
 `;
 
-const StyledInput = styled(Input)`
-  margin-bottom: 1em;
-`;
+class NewArticleView extends Component {
+  chooseRenderForm(id) {
+    switch (id) {
+      case 'gallery':
+        return <GalleryForm />;
+      case 'tiles':
+        return <HeroForm />;
+      case 'simple-text':
+        return <SimpleTextForm />;
+      case 'quotation':
+        return <IlustratedArticleForm />;
+      case 'slider':
+        return <SliderForm />;
+      case 'article':
+        return <ArticleForm />;
+      case 'article-tiles':
+        return <ArticleTilesForm />;
+      case 'article-bottom-tiles':
+        return <ArticleBottomTileForm />;
+      default:
+        return <ArticleForm />;
+    }
+  }
 
-const NewArticleView = () => {
-  return (
-    <MainTemplate>
-      <WithoutHeroImg>
-        <StyledContainer>
-          <Title className="mb-2">
-            <>Nowy artykuł</>
-          </Title>
-          <LayoutName>
-            <b>Nazwa układu:</b> artykuł
-          </LayoutName>
-          <Row>
-            <Formik
-              initialValues={{ email: '', password: '' }}
-              validate={values => {
-                const errors = {};
-                if (!values.email) {
-                  errors.email = 'Required';
-                } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                  errors.email = 'Invalid email address';
-                }
-                return errors;
-              }}
-              onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  console.log(values);
-                  setSubmitting(false);
-                }, 400);
-              }}
-            >
-              {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
-                /* and other goodies */
-              }) => (
-                <form className="col-12 no-gutters" onSubmit={handleSubmit}>
-                  <Col sm="6">
-                    <StyledInput
-                      type="email"
-                      name="email"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.email}
-                    />
-                    {errors.email && touched.email && errors.email}
-                  </Col>
-                  <Col sm="6">
-                    <StyledInput
-                      type="password"
-                      name="password"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.password}
-                    />
-                    {errors.password && touched.password && errors.password}
-                  </Col>
-                  <Col sm="6">
-                    <Button color="info" type="submit" disabled={isSubmitting}>
-                      Submit
-                    </Button>
-                  </Col>
-                </form>
-              )}
-            </Formik>
-          </Row>
-        </StyledContainer>
-      </WithoutHeroImg>
-    </MainTemplate>
-  );
-};
+  formName(id) {
+    switch (id) {
+      case 'gallery':
+        return 'Galeria';
+      case 'tiles':
+        return 'Kafelki';
+      case 'simple-text':
+        return 'Prosty tekst';
+      case 'quotation':
+        return 'Cytat';
+      case 'slider':
+        return 'Duży slider';
+      case 'article':
+        return 'Artykuł';
+      case 'article-tiles':
+        return 'Artykuł z kafelkami';
+      case 'article-bottom-tiles':
+        return 'Artykuł z kafelkiem u dołu';
+      default:
+        return 'Artykuł';
+    }
+  }
 
-export default NewArticleView;
+  render() {
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    return (
+      <MainTemplate>
+        <WithoutHeroImg>
+          <StyledContainer>
+            <Title className="mb-2">
+              <>Nowy artykuł</>
+            </Title>
+            <LayoutName>
+              <b>Nazwa układu:</b> {this.formName(id)}
+            </LayoutName>
+            <Row>{this.chooseRenderForm(id)}</Row>
+          </StyledContainer>
+        </WithoutHeroImg>
+      </MainTemplate>
+    );
+  }
+}
+
+export default withRouter(NewArticleView);
