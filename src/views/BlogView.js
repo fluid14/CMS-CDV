@@ -76,7 +76,7 @@ const BlogView = () => {
       timestamp: '10.05.2020',
     },
   ];
-
+  let countLeft = 0;
   return (
     <MainTemplate>
       <WithoutHeroImg>
@@ -85,22 +85,44 @@ const BlogView = () => {
             <>Artykuły</>
           </Title>
           <Row>
-            {articles.map(article => {
-              return (
-                <Col sm="6">
-                  <StyledCard body>
-                    <CardImg top width="100%" src={article.img} alt="Card image cap" />
-                    <CardBody>
-                      <CardTitle>{article.title}</CardTitle>
-                      <CardText>{article.teaser}</CardText>
-                      <Button color="info" tag={Link} to={`/blog/article/${article.id}`}>
-                        Czytaj
-                      </Button>
-                    </CardBody>
-                  </StyledCard>
-                </Col>
-              );
-            })}
+            <Col sm="6">
+              {articles.map(article => {
+                countLeft++;
+                if (countLeft % 2 === 0) {
+                  return (
+                    <StyledCard body key={article.id}>
+                      <CardImg top width="100%" src={article.img} alt="Card image cap" />
+                      <CardBody>
+                        <CardTitle>{article.title}</CardTitle>
+                        <CardText>{article.teaser}</CardText>
+                        <Button color="info" tag={Link} to={`/blog/article/${article.id}`}>
+                          Czytaj
+                        </Button>
+                      </CardBody>
+                    </StyledCard>
+                  );
+                }
+              })}
+            </Col>
+            <Col sm="6">
+              {articles.map(article => {
+                countLeft++;
+                if (countLeft % 2 !== 0) {
+                  return (
+                    <StyledCard body key={article.id}>
+                      <CardImg top width="100%" src={article.img} alt="Card image cap" />
+                      <CardBody>
+                        <CardTitle>{article.title}</CardTitle>
+                        <CardText>{article.teaser}</CardText>
+                        <Button color="info" tag={Link} to={`/blog/article/${article.id}`}>
+                          Czytaj
+                        </Button>
+                      </CardBody>
+                    </StyledCard>
+                  );
+                }
+              })}
+            </Col>
           </Row>
         </StyledContainer>
       </WithoutHeroImg>
