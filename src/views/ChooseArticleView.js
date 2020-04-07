@@ -43,48 +43,56 @@ const ChooseArticleView = () => {
       id: 1,
       img: galleryImg,
       description: ['Tytuł', 'Paragraf', '9 obrazków'],
+      name: 'gallery',
     },
     {
       title: 'Kafelki',
       id: 2,
       img: heroImg,
       description: ['Obrazek', 'Paragraf'],
+      name: 'tiles',
     },
     {
       title: 'Prosty tekst',
       id: 3,
       img: simpleTextImg,
       description: ['Tytuł', 'Paragraf'],
+      name: 'simple-text',
     },
     {
       title: 'Cytat',
       id: 4,
       img: ilustratedImg,
       description: ['Wyrózniony paragraf', 'Paragraf', 'Cytat', 'Paragraf'],
+      name: 'quotation',
     },
     {
       title: 'Duzy slider',
       id: 5,
       img: sliderImg,
       description: ['Tytuł', 'Slider - 6 obrazków', 'Paragraf'],
+      name: 'slider',
     },
     {
       title: 'Artykuł',
       id: 6,
       img: articleImg,
       description: ['Wyrózniony paragraf', 'Paragraf', 'Obraz', 'Paragraf', 'Obraz', 'Paragraf'],
+      name: 'article',
     },
     {
       title: 'Artykuł z kaflami',
       id: 7,
       img: articleTilesImg,
       description: ['3x kafelek:', 'Obrazek', 'Tytuł', 'Paragraf'],
+      name: 'article-tiles',
     },
     {
       title: 'Artykuł z kaflem u dołu',
       id: 8,
       img: articleBottomImg,
       description: ['Tytuł', 'Paragraf', 'Obrazek', 'Tytuł', 'Paragraf'],
+      name: 'article-bottom-tiles',
     },
   ];
 
@@ -100,7 +108,7 @@ const ChooseArticleView = () => {
               {articles.map(article => {
                 if (article.id % 2 === 1) {
                   return (
-                    <StyledCard body>
+                    <StyledCard key={article.id} body>
                       <CardImg top width="100%" src={article.img} alt="Card image cap" />
                       <CardBody>
                         <CardTitle>{article.title}</CardTitle>
@@ -109,7 +117,7 @@ const ChooseArticleView = () => {
                             return <ListGroupItem>{item}</ListGroupItem>;
                           })}
                         </ListGroup>
-                        <Button color="info" tag={Link} to={`/new/${article.id}`}>
+                        <Button color="info" tag={Link} to={`/new/${article.name}`}>
                           Wybierz
                         </Button>
                       </CardBody>
@@ -131,7 +139,7 @@ const ChooseArticleView = () => {
                             return <ListGroupItem>{item}</ListGroupItem>;
                           })}
                         </ListGroup>
-                        <Button color="info" tag={Link} to={`/new/${article.id}`}>
+                        <Button color="info" tag={Link} to={`/new/${article.name}`}>
                           Wybierz
                         </Button>
                       </CardBody>
