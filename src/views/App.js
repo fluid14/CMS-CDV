@@ -17,6 +17,7 @@ import SliderTemplate from 'views/templates/SliderTemplate';
 import AllArticlesView from 'views/AllArticlesView';
 import ChooseArticleView from 'views/ChooseArticleView';
 import NewArticleView from 'views/NewArticleView';
+import SiteSettings from './SiteSettings';
 
 const App = () => (
   <BrowserRouter>
@@ -43,6 +44,7 @@ const App = () => (
         <Route exact path="/new/choose-article" component={ChooseArticleView} />
         <Route exact path="/blog/all-articles/:id" component={AllArticlesView} />
         <Route exact path="/new/:id" component={NewArticleView} />
+        <Route exact path="/settings" component={SiteSettings} />
       </Switch>
     </GlobalTemplate>
   </BrowserRouter>

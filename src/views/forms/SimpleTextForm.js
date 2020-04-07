@@ -64,9 +64,11 @@ class SimpleTextForm extends Component {
                   required
                 />
               </Col>
-              <Button color="info" type="submit" disabled={isSubmitting}>
-                Submit
-              </Button>
+              <Col>
+                <Button color="info" type="submit" disabled={isSubmitting}>
+                  Submit
+                </Button>
+              </Col>
             </Row>
           </form>
         )}

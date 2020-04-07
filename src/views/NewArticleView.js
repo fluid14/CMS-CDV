@@ -23,7 +23,9 @@ const LayoutName = styled.p`
   font-size: 1.2rem;
   font-weight: 1.5rem;
   margin-bottom: 2em;
+  margin-top: 0.5em;
   color: var(--dark);
+  text-transform: lowercase;
 `;
 
 class NewArticleView extends Component {
@@ -87,9 +89,11 @@ class NewArticleView extends Component {
               <>Nowy artykuł</>
             </Title>
             <LayoutName>
-              <b>Nazwa układu:</b> {this.formName(id)}
+              <b>nazwa układu:</b> {this.formName(id)}
             </LayoutName>
-            <Row>{this.chooseRenderForm(id)}</Row>
+            <Row>
+              <Container>{this.chooseRenderForm(id)}</Container>
+            </Row>
           </StyledContainer>
         </WithoutHeroImg>
       </MainTemplate>

@@ -13,7 +13,9 @@ const ImageStyled = styled(Image)`
 
 const ArticleTemplate = () => (
   <MainTemplate>
-    <HeroImage imgSrc="https://source.unsplash.com/random/1280x500">Tytuł</HeroImage>
+    <HeroImage imgSrc="https://source.unsplash.com/random/1280x500">
+      <>Tytuł</>
+    </HeroImage>
     <Container>
       <SectionWrap>
         <Paragraph bold>

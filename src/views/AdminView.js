@@ -29,7 +29,7 @@ const AdminView = () => (
             </LinkAdmin>
           </Col>
           <Col sm="12">
-            <LinkAdmin link="/blog">
+            <LinkAdmin link="/blog/all-articles/dsfg">
               <>Edytuj artykuł</>
             </LinkAdmin>
           </Col>
@@ -39,7 +39,7 @@ const AdminView = () => (
             </LinkAdmin>
           </Col>
           <Col sm="12">
-            <LinkAdmin link="/blog">
+            <LinkAdmin link="/settings">
               <>Ustawienia strony</>
             </LinkAdmin>
           </Col>
