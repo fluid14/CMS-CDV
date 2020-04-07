@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {
   Collapse,
@@ -11,13 +12,20 @@ import {
   NavbarText,
 } from 'reactstrap';
 
+const Wrap = styled.div`
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+`;
+
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div>
+    <Wrap>
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">CMS CDV</NavbarBrand>
         <NavbarToggler onClick={toggle} />
@@ -44,7 +52,7 @@ const NavBar = () => {
           </NavbarText>
         </Collapse>
       </Navbar>
-    </div>
+    </Wrap>
   );
 };
 
