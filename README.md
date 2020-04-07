@@ -14,6 +14,8 @@
 `$ . venv/bin/activate`
 4. In the venv activated install Flask:
 `$ pip install flask`
+and
+`$ pip install pyodbc`
 5. Now you can run Flask with:
 ```
 $ export FLASK_APP=hello.py
