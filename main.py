@@ -12,6 +12,9 @@ def hello_world():
 
 @app.route('/login', methods=['POST'])
 def login():
-    result = ul.validate_login(request.username, request.password)
-    if result:
-        return result
+    response = ul.validate_login(request.json['username'], request.json['password'])
+    if response:
+        return response
+    else:
+        error = "Invalid username/password"
+        return error

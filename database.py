@@ -5,10 +5,10 @@ import logging
 class Database:
     def __init__(self):
         self.connection = None
-        self.server = '<server>.database.windows.net'
-        self.database = '<database>'
-        self.username = '<username>'
-        self.password = '<password>'
+        self.server = 'cms-cdv.database.windows.net'
+        self.database = 'CMS'
+        self.username = 'cms-cdv'
+        self.password = 'Projekt123!'
         self.driver = '{ODBC Driver 17 for SQL Server}'
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)

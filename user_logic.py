@@ -5,9 +5,13 @@ def validate_login(username, password):
     database = Database()
     connection = database.connect()
     cursor = connection.cursor()
-    row = cursor.execute("SELECT * FROM USERS WHERE USERNAME=? AND PASSWORD=?", (username, password)).fetchone
+    cursor.execute("SELECT * FROM USERS WHERE USERNAME=? AND PASSWORD=?", username, password)
+    row = cursor.fetchone()
     if row:
-        data = (row.user_id, row.role_id)
+        data = {
+            "id": row.id,
+            "role": row.role
+        }
         return data
     else:
         return False
