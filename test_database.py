@@ -1,4 +1,5 @@
 import user_logic as ul
+import articles_logic as al
 
-data = ul.validate_login("john", "qwerty123")
-print(data['id'])
+data = al.get_all_articles(1)
+print(data)

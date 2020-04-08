@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 import user_logic as ul
+import articles_logic as al
 
 app = Flask(__name__)
 
@@ -15,6 +16,8 @@ def login():
     response = ul.validate_login(request.json['username'], request.json['password'])
     if response:
         return response
-    else:
-        error = "Invalid username/password"
-        return error
+
+
+@app.route('/all-articles', methods=['GET'])
+def all_articles():
+    return al.get_all_articles(request.args.get('id'))

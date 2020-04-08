@@ -12,10 +12,12 @@
 `$ python3 -m venv venv`
 3. Activate the environment
 `$ . venv/bin/activate`
-4. In the venv activated install Flask:
-`$ pip install flask`
-and
-`$ pip install pyodbc`
+4. In the venv activated install dependencies
+```
+$ pip install flask
+$ pip install pyodbc
+$ pip install python-dotenv
+```
 5. Now you can run Flask with:
 ```
 $ export FLASK_APP=hello.py
