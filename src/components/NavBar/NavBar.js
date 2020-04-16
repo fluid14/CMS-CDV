@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -21,17 +21,38 @@ const Wrap = styled.div`
   z-index: 9999;
 `;
 
+const StyledNavbarText = styled(NavbarText)`
+  cursor: pointer;
+  transition: 0.1s ease;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.7);
+    text-decoration: none;
+  }
+`;
+
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const history = useHistory();
+
+  const logout = () => {
+    sessionStorage.clear();
+    history.push('/blog');
+  };
 
   const toggle = () => setIsOpen(!isOpen);
+  let doneUserName = '';
+  const userName = sessionStorage.getItem('userName');
+  if (userName) {
+    doneUserName = userName.charAt(0).toUpperCase() + userName.substr(1);
+  }
 
   return (
     <UserContextConsumer>
       {context => (
         <Wrap>
           <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">CMS CDV</NavbarBrand>
+            <NavbarBrand href="/blog">CMS CDV</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="mr-auto" navbar>
@@ -51,9 +72,21 @@ const NavBar = () => {
                   </NavLink>
                 </NavItem>
               </Nav>
-              <NavbarText tag={Link} to="/admin">
-                {context.user.userName}
-              </NavbarText>
+              {userName && (
+                <>
+                  <StyledNavbarText className="mr-4" onClick={logout}>
+                    Wyloguj
+                  </StyledNavbarText>
+                  <StyledNavbarText tag={Link} to="/admin">
+                    {doneUserName}
+                  </StyledNavbarText>
+                </>
+              )}
+              {!userName && (
+                <StyledNavbarText tag={Link} to="/login">
+                  Zaloguj
+                </StyledNavbarText>
+              )}
             </Collapse>
           </Navbar>
         </Wrap>

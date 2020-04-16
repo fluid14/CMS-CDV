@@ -20,10 +20,12 @@ import NewArticleView from 'views/NewArticleView';
 import SiteSettings from './SiteSettings';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import ProtectedAdminRoute from '../components/ProtectedRoute/ProtectedAdminRoute';
+import Preloader from '../components/Preloader/Preloader';
 
 const App = () => (
   <BrowserRouter>
     <GlobalTemplate>
+      <Preloader />
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/blog" />} />
         <Route exact path="/login" component={LoginView} />

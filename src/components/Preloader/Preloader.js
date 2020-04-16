@@ -16,9 +16,10 @@ const PreloaderWrap = styled.div`
   transition: 0.4s ease;
 
   ${({ loading }) =>
-    loading &
+    loading &&
     css`
       opacity: 0;
+      z-index: -99;
     `}
 `;
 
@@ -28,16 +29,20 @@ class Preloader extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      loading: false,
-    });
+    this.removePreloader();
   }
+
+  removePreloader = () => {
+    this.setState({
+      loading: true,
+    });
+  };
 
   render() {
     const { loading } = this.state;
     return (
-      <PreloaderWrap>
-        <div className="spinner-border text-info" role="status" loading={loading}>
+      <PreloaderWrap loading={loading}>
+        <div className="spinner-border text-info" role="status">
           <span className="sr-only">Loading...</span>
         </div>
       </PreloaderWrap>
