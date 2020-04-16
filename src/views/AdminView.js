@@ -5,48 +5,56 @@ import { Container, Row, Col } from 'reactstrap';
 import WithoutHeroImg from 'components/Helpers/WithoutHeroImg';
 import Title from 'components/text/Title/Title';
 import LinkAdmin from 'components/navigations/LinkAdmin/LinkAdmin';
+import { Redirect } from 'react-router-dom';
 
 const StyledContainer = styled(Container)`
   min-height: calc(100vh - 58px - 56px - 4em - 5em);
 `;
 
-const AdminView = () => (
-  <MainTemplate>
-    <WithoutHeroImg>
-      <StyledContainer>
-        <Title className="mb-5">
-          <>Panel administracyjny</>
-        </Title>
-        <Row>
-          <Col sm="12">
-            <LinkAdmin link="/new/choose-article">
-              <>Nowy artykuł</>
-            </LinkAdmin>
-          </Col>
-          <Col sm="12">
-            <LinkAdmin link="/blog/all-articles/dsfg">
-              <>Moje artykuły</>
-            </LinkAdmin>
-          </Col>
-          <Col sm="12">
-            <LinkAdmin link="/blog/all-articles/dsfg">
-              <>Edytuj artykuł</>
-            </LinkAdmin>
-          </Col>
-          <Col sm="12">
-            <LinkAdmin link="/blog">
-              <>Ustawienia konta</>
-            </LinkAdmin>
-          </Col>
-          <Col sm="12">
-            <LinkAdmin link="/settings">
-              <>Ustawienia strony</>
-            </LinkAdmin>
-          </Col>
-        </Row>
-      </StyledContainer>
-    </WithoutHeroImg>
-  </MainTemplate>
-);
+const AdminView = () => {
+  if (sessionStorage.getItem('logged') != 'true') {
+    return <Redirect to="/login" />;
+  }
+  return (
+    <MainTemplate>
+      <WithoutHeroImg>
+        <StyledContainer>
+          <Title className="mb-5">
+            <>Panel administracyjny</>
+          </Title>
+          <Row>
+            <Col sm="12">
+              <LinkAdmin link="/new/choose-article">
+                <>Nowy artykuł</>
+              </LinkAdmin>
+            </Col>
+            <Col sm="12">
+              <LinkAdmin link="/blog/all-articles/dsfg">
+                <>Moje artykuły</>
+              </LinkAdmin>
+            </Col>
+            <Col sm="12">
+              <LinkAdmin link="/blog/all-articles/dsfg">
+                <>Edytuj artykuł</>
+              </LinkAdmin>
+            </Col>
+            <Col sm="12">
+              <LinkAdmin link="/blog">
+                <>Ustawienia konta</>
+              </LinkAdmin>
+            </Col>
+            {sessionStorage.getItem('role') === 'admin' && (
+              <Col sm="12">
+                <LinkAdmin link="/settings">
+                  <>Ustawienia strony</>
+                </LinkAdmin>
+              </Col>
+            )}
+          </Row>
+        </StyledContainer>
+      </WithoutHeroImg>
+    </MainTemplate>
+  );
+};
 
 export default AdminView;

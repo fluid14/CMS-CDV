@@ -18,13 +18,15 @@ import AllArticlesView from 'views/AllArticlesView';
 import ChooseArticleView from 'views/ChooseArticleView';
 import NewArticleView from 'views/NewArticleView';
 import SiteSettings from './SiteSettings';
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import ProtectedAdminRoute from '../components/ProtectedRoute/ProtectedAdminRoute';
 
 const App = () => (
   <BrowserRouter>
     <GlobalTemplate>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/loginView" />} />
-        <Route exact path="/loginView" component={LoginView} />
+        <Route exact path="/" render={() => <Redirect to="/blog" />} />
+        <Route exact path="/login" component={LoginView} />
         <Route exact path="/admin" component={AdminView} />
         <Route exact path="/blog" component={BlogView} />
         <Route exact path="/about" component={AboutUsView} />
@@ -41,10 +43,10 @@ const App = () => (
           path="/blog/ilustrated-article-bottom-tile/:id"
           component={IlustratedArticleTemplate}
         />
-        <Route exact path="/new/choose-article" component={ChooseArticleView} />
-        <Route exact path="/blog/all-articles/:id" component={AllArticlesView} />
-        <Route exact path="/new/:id" component={NewArticleView} />
-        <Route exact path="/settings" component={SiteSettings} />
+        <ProtectedRoute exact path="/new/choose-article" component={ChooseArticleView} />
+        <ProtectedRoute exact path="/blog/all-articles/:id" component={AllArticlesView} />
+        <ProtectedRoute exact path="/new/:id" component={NewArticleView} />
+        <ProtectedAdminRoute exact path="/settings" component={SiteSettings} />
       </Switch>
     </GlobalTemplate>
   </BrowserRouter>
