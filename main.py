@@ -34,3 +34,9 @@ def all_articles():
 def delete_article():
     al.delete_article(request.args.get('id'))
     return '', 200
+
+
+@app.route('/add-article', methods=['POST'])
+def add_article():
+    al.add_article(request.json)
+    return '', 200
