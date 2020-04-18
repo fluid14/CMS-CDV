@@ -20,6 +20,17 @@ def login():
         return '', 403
 
 
+@app.route('/all-articles/<user_id>', methods=['GET'])
+def all_user_articles(user_id):
+    return al.get_user_articles(user_id)
+
+
 @app.route('/all-articles', methods=['GET'])
 def all_articles():
-    return al.get_all_articles(request.args.get('id'))
+    return al.get_all_articles()
+
+
+@app.route('/article', methods=['DELETE'])
+def delete_article():
+    al.delete_article(request.args.get('id'))
+    return '', 200
