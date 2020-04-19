@@ -17,8 +17,10 @@ class GlobalTemplate extends Component {
     const { children } = this.props;
     return (
       <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        {children}
+        <>
+          <GlobalStyle />
+          {children}
+        </>
       </ThemeProvider>
     );
   }
