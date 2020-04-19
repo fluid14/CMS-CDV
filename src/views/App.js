@@ -25,31 +25,33 @@ import Preloader from '../components/Preloader/Preloader';
 const App = () => (
   <BrowserRouter>
     <GlobalTemplate>
-      <Preloader />
-      <Switch>
-        <Route exact path="/" render={() => <Redirect to="/blog" />} />
-        <Route exact path="/login" component={LoginView} />
-        <Route exact path="/admin" component={AdminView} />
-        <Route exact path="/blog" component={BlogView} />
-        <Route exact path="/about" component={AboutUsView} />
-        <Route exact path="/contact" component={ContactView} />
-        <Route exact path="/blog/gallery/:id" component={GalleryTemplate} />
-        <Route exact path="/blog/simple-text/:id" component={SimpleTextTemplate} />
-        <Route exact path="/blog/article/:id" component={ArticleTemplate} />
-        <Route exact path="/blog/article-tiles/:id" component={ArticleTilesTemplate} />
-        <Route exact path="/blog/article-bottom-tile/:id" component={ArticleBottomTileTemplate} />
-        <Route exact path="/blog/hero/:id" component={HeroTemplate} />
-        <Route exact path="/blog/slider/:id" component={SliderTemplate} />
-        <Route
-          exact
-          path="/blog/ilustrated-article-bottom-tile/:id"
-          component={IlustratedArticleTemplate}
-        />
-        <ProtectedRoute exact path="/new/choose-article" component={ChooseArticleView} />
-        <ProtectedRoute exact path="/blog/all-articles/:id" component={AllArticlesView} />
-        <ProtectedRoute exact path="/new/:id" component={NewArticleView} />
-        <ProtectedAdminRoute exact path="/settings" component={SiteSettings} />
-      </Switch>
+      <>
+        <Preloader />
+        <Switch>
+          <Route exact path="/" render={() => <Redirect to="/blog" />} />
+          <Route exact path="/login" component={LoginView} />
+          <ProtectedRoute exact path="/admin" component={AdminView} />
+          <Route exact path="/blog" component={BlogView} />
+          <Route exact path="/about" component={AboutUsView} />
+          <Route exact path="/contact" component={ContactView} />
+          <Route exact path="/blog/gallery/:id" component={GalleryTemplate} />
+          <Route exact path="/blog/simple-text/:id" component={SimpleTextTemplate} />
+          <Route exact path="/blog/article/:id" component={ArticleTemplate} />
+          <Route exact path="/blog/article-tiles/:id" component={ArticleTilesTemplate} />
+          <Route exact path="/blog/article-bottom-tile/:id" component={ArticleBottomTileTemplate} />
+          <Route exact path="/blog/hero/:id" component={HeroTemplate} />
+          <Route exact path="/blog/slider/:id" component={SliderTemplate} />
+          <Route
+            exact
+            path="/blog/ilustrated-article-bottom-tile/:id"
+            component={IlustratedArticleTemplate}
+          />
+          <ProtectedRoute exact path="/new/choose-article" component={ChooseArticleView} />
+          <ProtectedRoute exact path="/admin/all-articles/:id" component={AllArticlesView} />
+          <ProtectedRoute exact path="/new/:id" component={NewArticleView} />
+          <ProtectedAdminRoute exact path="/settings" component={SiteSettings} />
+        </Switch>
+      </>
     </GlobalTemplate>
   </BrowserRouter>
 );
