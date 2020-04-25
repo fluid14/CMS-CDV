@@ -63,7 +63,7 @@ def delete_article(article_id):
     database = Database()
     connection = database.connect()
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM ARTICLES WHERE ID=?", article_id)
+    cursor.execute("DELETE FROM ARTICLES_PROD WHERE ID=?", article_id)
     cursor.commit()
     logger.info(f"Article id:{article_id} deleted")
     cursor.close()
@@ -71,7 +71,6 @@ def delete_article(article_id):
 
 
 def add_article(request):
-    #TODO: work in progress - implement switch to match article_type in request
     database = Database()
     connection = database.connect()
     cursor = connection.cursor()
