@@ -9,10 +9,30 @@ from add_articles_logic import add_article_page
 from add_articles_logic import add_about_us_page
 from add_articles_logic import add_simple_page
 from add_articles_logic import add_gallery_page
+
+from get_articles_logic import get_tiled_article_page
+from get_articles_logic import get_ilustrated_page
+from get_articles_logic import get_hero_page
+from get_articles_logic import get_bottom_tiled_page
+from get_articles_logic import get_big_slider_page
+from get_articles_logic import get_article_page
+from get_articles_logic import get_about_us_page
+from get_articles_logic import get_simple_page
+from get_articles_logic import get_gallery_page
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def get_article(article_id, page_type):
+    database = Database()
+    connection = database.connect()
+    cursor = connection.cursor()
+    result = check_page_type_and_call_get_function(page_type, cursor, article_id)
+    cursor.close()
+    connection.close()
+    return result
 
 
 def get_user_articles(user_id):
@@ -102,6 +122,21 @@ def check_page_type_and_call_add_function(page_type, cursor, request_data):
         'about_us_page': add_about_us_page
     }
     switch[page_type](cursor, request_data)
+
+
+def check_page_type_and_call_get_function(page_type, cursor, article_id):
+    switch = {
+        'simple_page': get_simple_page,
+        'gallery_page': get_gallery_page,
+        'hero_page': get_hero_page,
+        'ilustrated_page': get_ilustrated_page,
+        'big_slider_page': get_big_slider_page,
+        'article_page': get_article_page,
+        'tiled_article_page': get_tiled_article_page,
+        'bottom_tiled_page': get_bottom_tiled_page,
+        'about_us_page': get_about_us_page
+    }
+    return switch[page_type](cursor, article_id)
 
 
 def fetch_max_id_from_articles_table(cursor):

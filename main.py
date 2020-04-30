@@ -40,3 +40,8 @@ def delete_article():
 def add_article():
     al.add_article(request.json)
     return '', 200
+
+
+@app.route('/article', methods=['GET'])
+def get_article():
+    return al.get_article(request.json["id"], request.json["page_type"])
