@@ -170,7 +170,7 @@ def update_big_slider_page(cursor, request_data):
             SET short_title=?, short_description=?,
             preview_image=?, image1=?, image2=?, image3=?, image4=?,
             image5=?, image6=?, image7=?, paragraph1=?, paragraph2=?,
-            paragraph3=?, paragraph4=?, paragraph5=?, paragraph6=?, paragraph7=?, header WHERE id=?""", params)
+            paragraph3=?, paragraph4=?, paragraph5=?, paragraph6=?, paragraph7=?, header=? WHERE id=?""", params)
     cursor.commit()
     logger.info(f"Article: {article_id} successfully updated.")
 
@@ -222,7 +222,7 @@ def update_bottom_tiled_page(cursor, request_data):
     params = (short_title,
               short_description, preview_image,
               paragraph1, paragraph2, paragraph3,
-              paragraph4, image1, image2, header)
+              paragraph4, image1, image2, header, article_id)
     cursor.execute("""
         UPDATE ARTICLES_PROD 
         SET short_title=?,
@@ -262,6 +262,6 @@ def update_about_us_page(cursor, request_data):
         short_description=?, preview_image=?, 
         paragraph1=?, paragraph2=?, paragraph3=?, 
         paragraph4=?, paragraph5=?, paragraph6=?, 
-        hero_img=?, image1=?, header=?, latitude=?, longitude WHERE id=?""", params)
+        hero_img=?, image1=?, header=?, latitude=?, longitude=? WHERE id=?""", params)
     cursor.commit()
     logger.info(f"Article: {article_id} successfully updated.")
