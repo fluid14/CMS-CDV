@@ -35,10 +35,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def get_article(article_id, page_type):
+def get_article(article_id):
     database = Database()
     connection = database.connect()
     cursor = connection.cursor()
+    page_type = fetch_page_type(article_id)
     result = check_page_type_and_call_get_function(page_type, cursor, article_id)
     cursor.close()
     connection.close()
@@ -173,3 +174,18 @@ def check_page_type_and_call_update_function(page_type, cursor, request_data):
         'about_us_page': update_about_us_page
     }
     switch[page_type](cursor, request_data)
+
+
+def fetch_page_type(article_id):
+    database = Database()
+    connection = database.connect()
+    cursor = connection.cursor()
+    cursor.execute(
+        "SELECT page_type FROM ARTICLES_PROD WHERE id=?",
+        article_id)
+    row = cursor.fetchone()
+    if row:
+        logger.info(f"Fetching article number: {article_id}, page type: {row.page_type}")
+        return row.page_type
+    else:
+        logger.info(f"Error while fetching article number: {article_id}, no article in database")
