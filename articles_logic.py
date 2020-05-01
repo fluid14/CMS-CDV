@@ -67,7 +67,7 @@ def get_all_articles():
     connection = database.connect()
     cursor = connection.cursor()
     cursor.execute(
-        "SELECT id, short_title, short_description, creation_date, preview_image, user_id FROM ARTICLES_prod")
+        "SELECT id, page_type, short_title, short_description, creation_date, preview_image, user_id FROM ARTICLES_prod")
     rows = cursor.fetchall()
     articles = []
     for row in rows:
@@ -78,7 +78,8 @@ def get_all_articles():
                 "description": row.short_description,
                 "date": row.creation_date,
                 "preview_image": row.preview_image,
-                "user_id": row.user_id
+                "user_id": row.user_id,
+                "page_type": row.page_type
             }
         )
     cursor.close()

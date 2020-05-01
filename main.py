@@ -21,13 +21,18 @@ def login():
 
 
 @app.route('/all-articles/<user_id>', methods=['GET'])
-def all_user_articles(user_id):
+def get_user_articles(user_id):
     return al.get_user_articles(user_id)
 
 
 @app.route('/all-articles', methods=['GET'])
-def all_articles():
+def get_all_articles():
     return al.get_all_articles()
+
+
+@app.route('/article', methods=['GET'])
+def get_article():
+    return al.get_article(request.json["id"], request.json["page_type"])
 
 
 @app.route('/article', methods=['DELETE'])
@@ -42,6 +47,3 @@ def add_article():
     return '', 200
 
 
-@app.route('/article', methods=['GET'])
-def get_article():
-    return al.get_article(request.json["id"], request.json["page_type"])
