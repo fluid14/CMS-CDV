@@ -34,18 +34,14 @@ const App = () => (
           <Route exact path="/blog" component={BlogView} />
           <Route exact path="/about" component={AboutUsView} />
           <Route exact path="/contact" component={ContactView} />
-          <Route exact path="/blog/gallery/:id" component={GalleryTemplate} />
-          <Route exact path="/blog/simple-text/:id" component={SimpleTextTemplate} />
-          <Route exact path="/blog/article/:id" component={ArticleTemplate} />
-          <Route exact path="/blog/article-tiles/:id" component={ArticleTilesTemplate} />
-          <Route exact path="/blog/article-bottom-tile/:id" component={ArticleBottomTileTemplate} />
-          <Route exact path="/blog/hero/:id" component={HeroTemplate} />
-          <Route exact path="/blog/slider/:id" component={SliderTemplate} />
-          <Route
-            exact
-            path="/blog/ilustrated-article-bottom-tile/:id"
-            component={IlustratedArticleTemplate}
-          />
+          <Route exact path="/blog/gallery_page/:id" component={GalleryTemplate} />
+          <Route exact path="/blog/simple_page/:id" component={SimpleTextTemplate} />
+          <Route exact path="/blog/article_page/:id" component={ArticleTemplate} />
+          <Route exact path="/blog/tiled_article_page/:id" component={ArticleTilesTemplate} />
+          <Route exact path="/blog/bottom_tiled_page/:id" component={ArticleBottomTileTemplate} />
+          <Route exact path="/blog/hero_page/:id" component={HeroTemplate} />
+          <Route exact path="/blog/big_slider_page/:id" component={SliderTemplate} />
+          <Route exact path="/blog/ilustrated_page/:id" component={IlustratedArticleTemplate} />
           <ProtectedRoute exact path="/new/choose-article" component={ChooseArticleView} />
           <ProtectedRoute exact path="/admin/all-articles/:id" component={AllArticlesView} />
           <ProtectedRoute exact path="/new/:id" component={NewArticleView} />

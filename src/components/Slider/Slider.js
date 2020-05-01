@@ -38,10 +38,11 @@ class Slider extends React.Component {
       <div className="swiper-container">
         <div className="swiper-wrapper">
           {data.map(item => {
+            const { url, title } = item;
             return (
-              <Col key={item.title} md="3" className="swiper-slide mb-5">
-                <Image src={item.url} />
-                <SlideTitle>{item.title}</SlideTitle>
+              <Col key={title} md="3" className="swiper-slide mb-5">
+                <Image src={url} />
+                <SlideTitle>{title}</SlideTitle>
               </Col>
             );
           })}
