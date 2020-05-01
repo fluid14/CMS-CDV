@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import MainTemplate from 'templates/MainTemplate';
 import { Container } from 'reactstrap';
 import MainTitle from 'components/text/MainTitle/MainTitle';
@@ -7,36 +7,70 @@ import Paragraph from 'components/text/Paragraph/Paragraph';
 import Gallery from 'components/Gallery/Gallery';
 import WithoutHeroImg from 'components/Helpers/WithoutHeroImg';
 import HeroImage from 'components/Image/HeroImage';
+import axios from 'axios';
 
-const GalleryTemplate = () => (
-  <MainTemplate>
-    <>
-      <HeroImage imgSrc="https://source.unsplash.com/random/1200x801">
-        <>Tytuł</>
-      </HeroImage>
-      <Container>
-        <WithoutHeroImg>
-          <SectionWrap m="100">
-            <MainTitle>
-              <>Galeria Tytuł</>
-            </MainTitle>
-            <Paragraph>
-              <>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam consequuntur
-                necessitatibus eos laudantium neque, molestiae autem perspiciatis quia officia
-                similique et ipsum ut illo ipsa quaerat omnis numquam totam? Eius cumque
-                perspiciatis aut quo et obcaecati dignissimos. Rem soluta pariatur saepe, deleniti
-                optio eos sequi numquam molestias ea necessitatibus ipsam.
-              </>
-            </Paragraph>
-          </SectionWrap>
-          <SectionWrap>
-            <Gallery />
-          </SectionWrap>
-        </WithoutHeroImg>
-      </Container>
-    </>
-  </MainTemplate>
-);
+class GalleryTemplate extends Component {
+  state = {
+    article: [],
+  };
+
+  componentDidMount() {
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+
+    axios
+      .get(`http://127.0.0.1:5000/article/${id}`)
+      .then(article => {
+        this.setState({
+          article: article.data.content,
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  render() {
+    const { article } = this.state;
+    console.log(article);
+    return (
+      <MainTemplate>
+        <>
+          <HeroImage imgSrc={article.hero_img}>
+            <>{article.header}</>
+          </HeroImage>
+          <Container>
+            <WithoutHeroImg>
+              <SectionWrap m="100">
+                <MainTitle>
+                  <>{article.short_title}</>
+                </MainTitle>
+                <Paragraph>
+                  <>{article.paragraph}</>
+                </Paragraph>
+              </SectionWrap>
+              <SectionWrap>
+                <Gallery
+                  gallery={[
+                    article.image1,
+                    article.image2,
+                    article.image3,
+                    article.image4,
+                    article.image5,
+                    article.image6,
+                    article.image7,
+                    article.image8,
+                    article.image9,
+                  ]}
+                />
+              </SectionWrap>
+            </WithoutHeroImg>
+          </Container>
+        </>
+      </MainTemplate>
+    );
+  }
+}
 
 export default GalleryTemplate;

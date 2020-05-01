@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Row, Col } from 'reactstrap';
 import Image from 'components/Image/Image';
@@ -11,37 +12,20 @@ const StyledRow = styled(Row)`
   margin-bottom: 30px;
 `;
 
-const Gallery = () => (
+const Gallery = ({ gallery }) => (
   <GalleryWrap>
     <StyledRow>
-      <Col sm="3">
-        <Image src="https://source.unsplash.com/random/500x501" />
-      </Col>
-      <Col sm="3">
-        <Image src="https://source.unsplash.com/random/501x500" />
-      </Col>
-      <Col sm="3">
-        <Image src="https://source.unsplash.com/random/500x500" />
-      </Col>
-      <Col sm="3">
-        <Image src="https://source.unsplash.com/random/501x500" />
-      </Col>
-    </StyledRow>
-    <StyledRow>
-      <Col sm="3">
-        <Image src="https://source.unsplash.com/random/500x501" />
-      </Col>
-      <Col sm="3">
-        <Image src="https://source.unsplash.com/random/501x500" />
-      </Col>
-      <Col sm="3">
-        <Image src="https://source.unsplash.com/random/500x500" />
-      </Col>
-      <Col sm="3">
-        <Image src="https://source.unsplash.com/random/501x500" />
-      </Col>
+      {gallery.map(img => (
+        <Col sm="3">
+          <Image src={img} />
+        </Col>
+      ))}
     </StyledRow>
   </GalleryWrap>
 );
+
+Gallery.propTypes = {
+  gallery: PropTypes.array.isRequired,
+};
 
 export default Gallery;

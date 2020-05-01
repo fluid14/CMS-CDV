@@ -5,9 +5,9 @@ const UserContext = React.createContext();
 
 class UserContextProvider extends React.Component {
   state = {
-    userName: 'Jan Nowak',
-    id: '',
-    role: '',
+    userName: sessionStorage.getItem('userName'),
+    id: sessionStorage.getItem('token'),
+    role: sessionStorage.getItem('role'),
   };
 
   loginUser = (key, val) => {

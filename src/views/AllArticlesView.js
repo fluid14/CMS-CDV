@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import MainTemplate from 'templates/MainTemplate';
@@ -28,12 +27,25 @@ class AllArticlesView extends Component {
 
   getArticles = id => {
     axios
-      .get(`http://127.0.0.1:5000//all-articles/${id}`)
+      .get(`http://127.0.0.1:5000/all-articles/${id}`)
       .then(response => {
         console.log(response);
         this.setState({
           articles: response.data.articles,
         });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  deleteArticle = id => {
+    axios
+      .delete('http://127.0.0.1:5000/article', {
+        params: { id },
+      })
+      .then(response => {
+        console.log(response);
       })
       .catch(error => {
         console.log(error);
@@ -53,7 +65,7 @@ class AllArticlesView extends Component {
               <Col sm="6">
                 {articles.map(article => {
                   return (
-                    <StyledCard body>
+                    <StyledCard body key={article.id}>
                       <CardTitle className="font-weight-bold">{article.title}</CardTitle>
                       <ButtonGroup size="md">
                         <Button tag={Link} to={`/blog/article/${article.id}`} color="info">
@@ -62,7 +74,7 @@ class AllArticlesView extends Component {
                         <Button tag={Link} to={`/blog/edit/${article.id}`} color="info">
                           Edycja
                         </Button>
-                        <Button tag={Link} to={`/blog/article/${article.id}`} color="info">
+                        <Button onClick={() => this.deleteArticle(article.id)} color="info">
                           Usuń
                         </Button>
                       </ButtonGroup>

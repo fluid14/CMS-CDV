@@ -21,11 +21,11 @@ const StyledContainer = styled(Container)`
 
 const LayoutName = styled.p`
   font-size: 1.2rem;
-  font-weight: 1.5rem;
+  //font-weight: 1.5rem;
   margin-bottom: 2em;
   margin-top: 0.5em;
   color: var(--dark);
-  text-transform: lowercase;
+  text-transform: uppercase;
 `;
 
 class NewArticleView extends Component {
@@ -88,9 +88,7 @@ class NewArticleView extends Component {
             <Title className="mb-2">
               <>Nowy artykuł</>
             </Title>
-            <LayoutName>
-              <b>nazwa układu:</b> {this.formName(id)}
-            </LayoutName>
+            <LayoutName>{this.formName(id)}</LayoutName>
             <Row>
               <Container>{this.chooseRenderForm(id)}</Container>
             </Row>
