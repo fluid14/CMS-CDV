@@ -1,5 +1,6 @@
+import logging
 from database import Database
-from datetime import date
+
 from add_articles_logic import add_tiled_article_page
 from add_articles_logic import add_ilustrated_page
 from add_articles_logic import add_hero_page
@@ -19,7 +20,16 @@ from get_articles_logic import get_article_page
 from get_articles_logic import get_about_us_page
 from get_articles_logic import get_simple_page
 from get_articles_logic import get_gallery_page
-import logging
+
+from update_articles_logic import update_tiled_article_page
+from update_articles_logic import update_ilustrated_page
+from update_articles_logic import update_hero_page
+from update_articles_logic import update_bottom_tiled_page
+from update_articles_logic import update_big_slider_page
+from update_articles_logic import update_article_page
+from update_articles_logic import update_about_us_page
+from update_articles_logic import update_simple_page
+from update_articles_logic import update_gallery_page
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -89,6 +99,16 @@ def get_all_articles():
     }
 
 
+def update_article(request):
+    database = Database()
+    connection = database.connect()
+    cursor = connection.cursor()
+    page_type = request['page_type']
+    check_page_type_and_call_update_function(page_type, cursor, request)
+    cursor.close()
+    connection.close()
+
+
 def delete_article(article_id):
     database = Database()
     connection = database.connect()
@@ -140,10 +160,16 @@ def check_page_type_and_call_get_function(page_type, cursor, article_id):
     return switch[page_type](cursor, article_id)
 
 
-def fetch_max_id_from_articles_table(cursor):
-    cursor.execute("SELECT MAX(ID) as MAX_ID FROM ARTICLES")
-    article_id = cursor.fetchone()
-    article_id = article_id[0]
-    return article_id
-
-
+def check_page_type_and_call_update_function(page_type, cursor, request_data):
+    switch = {
+        'simple_page': update_simple_page,
+        'gallery_page': update_gallery_page,
+        'hero_page': update_hero_page,
+        'ilustrated_page': update_ilustrated_page,
+        'big_slider_page': update_big_slider_page,
+        'article_page': update_article_page,
+        'tiled_article_page': update_tiled_article_page,
+        'bottom_tiled_page': update_bottom_tiled_page,
+        'about_us_page': update_about_us_page
+    }
+    switch[page_type](cursor, request_data)

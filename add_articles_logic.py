@@ -1,4 +1,3 @@
-from database import Database
 from datetime import date
 import logging
 
