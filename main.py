@@ -30,9 +30,9 @@ def get_all_articles():
     return al.get_all_articles()
 
 
-@app.route('/article', methods=['GET'])
-def get_article():
-    return al.get_article(request.json["id"], request.json["page_type"])
+@app.route('/article/<article_id>/<page_type>', methods=['GET'])
+def get_article(article_id, page_type):
+    return al.get_article(article_id, page_type)
 
 
 @app.route('/article', methods=['DELETE'])
