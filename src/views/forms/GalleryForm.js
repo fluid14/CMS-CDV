@@ -1,12 +1,87 @@
 import React, { Component } from 'react';
 import { Formik } from 'formik';
-import { Button, Row, Col } from 'reactstrap';
+import { Button, Row, Col, Label } from 'reactstrap';
 import StyledInput from '../../components/text/Input/Input';
 import addArticle from './addArticle';
 import { UserContextConsumer } from '../../context/userContext/UserContext';
+import convertToBase64 from './convertToBase64';
+import getArticle from '../templates/getArticle';
+import editArticle from './editArticle';
+import StyledCard from '../../components/StyledCard/StyledCard';
 
 class GalleryForm extends Component {
+  state = {
+    file: null,
+    base64URL: [],
+    article: {},
+  };
+
+  componentDidMount() {
+    const { edit } = this.props;
+    if (edit) {
+      getArticle(this.changeStateArticle, edit);
+    }
+  }
+
+  changeStateArticle = article => {
+    this.setState({
+      article,
+    });
+  };
+
+  changeState = result => {
+    this.setState(state => {
+      let imgList = state.base64URL.concat(result);
+      return {
+        base64URL: imgList,
+      };
+    });
+  };
+
+  initialData = (edit, article) => {
+    if (edit) {
+      return {
+        short_title: `${article.short_title}`,
+        short_description: `${article.short_description}`,
+        preview_image: `${article.preview_image}`,
+        hero_img: '',
+        header: `${article.header}`,
+        paragraph: `${article.paragraph}`,
+        image1: '',
+        image2: '',
+        image3: '',
+        image4: '',
+        image5: '',
+        image6: '',
+        image7: '',
+        image8: '',
+        image9: '',
+      };
+    } else {
+      return {
+        short_title: '',
+        short_description: '',
+        preview_image: '',
+        hero_img: '',
+        header: '',
+        paragraph: '',
+        image1: '',
+        image2: '',
+        image3: '',
+        image4: '',
+        image5: '',
+        image6: '',
+        image7: '',
+        image8: '',
+        image9: '',
+      };
+    }
+  };
+
   render() {
+    const { edit } = this.props;
+    const { article } = this.state;
+    console.log(article);
     return (
       <UserContextConsumer>
         {context => {
@@ -14,29 +89,29 @@ class GalleryForm extends Component {
           const { id } = context.user;
           return (
             <Formik
-              initialValues={{
-                short_title: '',
-                short_description: '',
-                preview_image: '',
-                hero_img: '',
-                header: '',
-                paragraph: '',
-                image1: '',
-                image2: '',
-                image3: '',
-                image4: '',
-                image5: '',
-                image6: '',
-                image7: '',
-                image8: '',
-                image9: '',
-              }}
+              enableReinitialize
+              initialValues={this.initialData(edit, article)}
               onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  console.log(values);
-                  addArticle(id, pageType, values);
-                  setSubmitting(false);
-                }, 400);
+                const { base64URL } = this.state;
+                let data = values;
+                data.preview_image = base64URL[0];
+                data.hero_img = base64URL[1];
+                data.image1 = base64URL[2];
+                data.image2 = base64URL[3];
+                data.image3 = base64URL[4];
+                data.image4 = base64URL[5];
+                data.image5 = base64URL[6];
+                data.image6 = base64URL[7];
+                data.image7 = base64URL[8];
+                data.image8 = base64URL[9];
+                data.image9 = base64URL[10];
+                console.log(data);
+                if (edit) {
+                  editArticle(edit, pageType, data);
+                } else {
+                  addArticle(id, pageType, data);
+                }
+                setSubmitting(false);
               }}
             >
               {({
@@ -50,180 +125,165 @@ class GalleryForm extends Component {
                 <form onSubmit={handleSubmit}>
                   <Row>
                     <Col md="12">
-                      <StyledInput
-                        type="text"
-                        name="short_title"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.short_title}
-                        placeholder="Krótki tytuł"
-                        required
-                      />
+                      <StyledCard>
+                        <Label for="preview_image">Ogólne:</Label>
+                        <StyledInput
+                          type="text"
+                          name="short_title"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.short_title}
+                          placeholder="Krótki tytuł"
+                          required
+                        />
+                        <StyledInput
+                          type="text"
+                          name="short_description"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.short_description}
+                          placeholder="Krótki opis"
+                          required
+                        />
+                        <Label for="preview_image">Miniaturka</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="preview_image"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+                      </StyledCard>
                     </Col>
                     <Col md="12">
-                      <StyledInput
-                        type="text"
-                        name="short_description"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.short_description}
-                        placeholder="Krótki opis"
-                        required
-                      />
+                      <StyledCard>
+                        <Label for="preview_image">Nagłówek:</Label>
+                        <Label for="hero_img">Zdjęcie nagłówka</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="hero_img"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+                        <StyledInput
+                          className="form-control"
+                          type="text"
+                          name="header"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.header}
+                          placeholder="Nagłówek"
+                          required
+                        />
+                      </StyledCard>
                     </Col>
                     <Col md="12">
-                      <StyledInput
-                        type="text"
-                        name="preview_image"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.preview_image}
-                        placeholder="Miniaturka"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        type="text"
-                        name="hero_img"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.hero_img}
-                        placeholder="Zdjęcie nagłówka"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="header"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.header}
-                        placeholder="Nagłówek"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="paragraph"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.paragraph}
-                        placeholder="Paragraf"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="image1"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.image1}
-                        placeholder="Zdjęcie"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="image2"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.image2}
-                        placeholder="Zdjęcie"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="image3"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.image3}
-                        placeholder="Zdjęcie"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="image4"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.image4}
-                        placeholder="Zdjęcie"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="image5"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.image5}
-                        placeholder="Zdjęcie"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="image6"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.image6}
-                        placeholder="Zdjęcie"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="image7"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.image7}
-                        placeholder="Zdjęcie"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="image8"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.image8}
-                        placeholder="Zdjęcie"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        className="form-control"
-                        type="text"
-                        name="image9"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.image9}
-                        placeholder="Zdjęcie"
-                        required
-                      />
+                      <StyledCard>
+                        <Label for="preview_image">Treści:</Label>
+                        <StyledInput
+                          className="form-control"
+                          type="text"
+                          name="paragraph"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.paragraph}
+                          placeholder="Paragraf"
+                          required
+                        />
+
+                        <Label for="image1">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image1"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <Label for="image2">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image2"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <Label for="image3">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image3"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <Label for="image4">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image4"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <Label for="image5">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image5"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <Label for="image6">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image6"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <Label for="image7">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image7"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <Label for="image8">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image8"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <Label for="image9">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image9"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+                      </StyledCard>
                     </Col>
                     <Col>
                       <Button color="info" type="submit" disabled={isSubmitting}>

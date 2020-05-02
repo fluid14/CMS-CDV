@@ -26,7 +26,6 @@ const App = () => (
   <BrowserRouter>
     <GlobalTemplate>
       <>
-        <Preloader />
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/blog" />} />
           <Route exact path="/login" component={LoginView} />
@@ -45,6 +44,7 @@ const App = () => (
           <ProtectedRoute exact path="/new/choose-article" component={ChooseArticleView} />
           <ProtectedRoute exact path="/admin/all-articles/:id" component={AllArticlesView} />
           <ProtectedRoute exact path="/new/:id" component={NewArticleView} />
+          <ProtectedRoute exact path="/new/:id/:articleId" component={NewArticleView} />
           <ProtectedAdminRoute exact path="/settings" component={SiteSettings} />
         </Switch>
       </>

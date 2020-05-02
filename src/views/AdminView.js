@@ -5,7 +5,6 @@ import { Container, Row, Col } from 'reactstrap';
 import WithoutHeroImg from 'components/Helpers/WithoutHeroImg';
 import Title from 'components/text/Title/Title';
 import LinkAdmin from 'components/navigations/LinkAdmin/LinkAdmin';
-import { Redirect } from 'react-router-dom';
 
 const StyledContainer = styled(Container)`
   min-height: calc(100vh - 58px - 56px - 4em - 5em);
@@ -44,11 +43,6 @@ class AdminView extends Component {
               <Col sm="12">
                 <LinkAdmin link={`/admin/all-articles/${userId}`}>
                   <>Edytuj artykuł</>
-                </LinkAdmin>
-              </Col>
-              <Col sm="12">
-                <LinkAdmin link="/blog">
-                  <>Ustawienia konta</>
                 </LinkAdmin>
               </Col>
               {sessionStorage.getItem('role') === 'admin' && (

@@ -1,31 +1,50 @@
 /* eslint-disable react/self-closing-comp */
-import React from 'react';
+import React, { Component } from 'react';
 import MainTemplate from 'templates/MainTemplate';
 import { Container } from 'reactstrap';
 import HeroImage from 'components/Image/HeroImage';
 import Contact from 'components/Contact/Contact';
 import Map from 'components/Map/Map';
+import getArticle from './templates/getArticle';
 
-const ContactView = () => {
-  return (
-    <MainTemplate>
-      <>
-        <HeroImage imgSrc="https://source.unsplash.com/random/1200x801">
-          <>Tytuł</>
-        </HeroImage>
-        <Container>
-          <Contact
-            mail="mail@gmail.com"
-            phone="888111222"
-            city="Warszawa"
-            zip="01-001"
-            street="Kutrzeby 12"
-          />
-        </Container>
-        <Map lat="-1.2884" lng="36.8233" />
-      </>
-    </MainTemplate>
-  );
-};
+class ContactView extends Component {
+  state = {
+    article: {},
+  };
+
+  componentDidMount() {
+    getArticle(this.changeState, 85);
+  }
+
+  changeState = article => {
+    this.setState({
+      article,
+    });
+  };
+
+  render() {
+    const { article } = this.state;
+    console.log(article);
+    return (
+      <MainTemplate>
+        <>
+          <HeroImage imgSrc={article.hero_img2}>
+            <>{article.title2}</>
+          </HeroImage>
+          <Container>
+            <Contact
+              mail={article.email}
+              phone={article.phone}
+              city={article.city}
+              zip={article.zip_code}
+              street={article.street}
+            />
+          </Container>
+          <Map lat={article.latitude} lng={article.longitude} />
+        </>
+      </MainTemplate>
+    );
+  }
+}
 
 export default ContactView;

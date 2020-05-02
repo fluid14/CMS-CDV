@@ -6,7 +6,7 @@ import HeroImage from 'components/Image/HeroImage';
 import SectionWrap from 'components/Helpers/SectionWrap';
 import MainTitle from 'components/text/MainTitle/MainTitle';
 import Paragraph from 'components/text/Paragraph/Paragraph';
-import axios from 'axios';
+import getArticle from './getArticle';
 
 class SimpleTextTemplate extends Component {
   state = {
@@ -20,18 +20,18 @@ class SimpleTextTemplate extends Component {
       },
     } = this.props;
 
-    axios
-      .get(`http://127.0.0.1:5000/article/${id}`)
-      .then(article => {
-        this.setState({
-          article: article.data.content,
-        });
-      })
-      .catch(err => console.log(err));
+    getArticle(this.changeState, id);
   }
+
+  changeState = article => {
+    this.setState({
+      article,
+    });
+  };
 
   render() {
     const { article } = this.state;
+    console.log(article);
     return (
       <MainTemplate>
         <HeroImage imgSrc={article.image} />

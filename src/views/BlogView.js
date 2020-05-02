@@ -17,6 +17,10 @@ import WithoutHeroImg from 'components/Helpers/WithoutHeroImg';
 import Title from 'components/text/Title/Title';
 import axios from 'axios';
 
+const StyledCardTitle = styled(CardTitle)`
+  font-weight: 700;
+`;
+
 const StyledContainer = styled(Container)`
   min-height: calc(100vh - 58px - 56px - 4em - 5em);
 `;
@@ -74,7 +78,7 @@ class BlogView extends Component {
                           alt="Card image cap"
                         />
                         <CardBody>
-                          <CardTitle>{article.title}</CardTitle>
+                          <StyledCardTitle>{article.title}</StyledCardTitle>
                           <CardText>{article.description}</CardText>
                           <Button
                             color="info"
@@ -98,11 +102,11 @@ class BlogView extends Component {
                         <CardImg
                           top
                           width="100%"
-                          src={`data:image/jpeg;base64,${article.preview_image}`}
+                          src={article.preview_image}
                           alt="Card image cap"
                         />
                         <CardBody>
-                          <CardTitle>{article.title}</CardTitle>
+                          <StyledCardTitle>{article.title}</StyledCardTitle>
                           <CardText>{article.description}</CardText>
                           <Button
                             color="info"

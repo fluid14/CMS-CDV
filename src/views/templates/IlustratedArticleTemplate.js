@@ -5,7 +5,7 @@ import HeroImage from 'components/Image/HeroImage';
 import SectionWrap from 'components/Helpers/SectionWrap';
 import Paragraph from 'components/text/Paragraph/Paragraph';
 import Quotation from 'components/text/Quotation/Quotation';
-import axios from 'axios';
+import getArticle from './getArticle';
 
 class IlustratedArticleTemplate extends Component {
   state = {
@@ -19,15 +19,14 @@ class IlustratedArticleTemplate extends Component {
       },
     } = this.props;
 
-    axios
-      .get(`http://127.0.0.1:5000/article/${id}`)
-      .then(article => {
-        this.setState({
-          article: article.data.content,
-        });
-      })
-      .catch(err => console.log(err));
+    getArticle(this.changeState, id);
   }
+
+  changeState = article => {
+    this.setState({
+      article,
+    });
+  };
 
   render() {
     const { article } = this.state;

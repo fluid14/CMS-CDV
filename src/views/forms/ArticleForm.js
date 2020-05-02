@@ -5,11 +5,28 @@ import StyledInput from '../../components/text/Input/Input';
 import addArticle from './addArticle';
 import { UserContextConsumer } from '../../context/userContext/UserContext';
 import convertToBase64 from './convertToBase64';
+import getArticle from '../templates/getArticle';
+import editArticle from './editArticle';
+import StyledCard from '../../components/StyledCard/StyledCard';
 
 class ArticleForm extends Component {
   state = {
     file: null,
     base64URL: [],
+    article: {},
+  };
+
+  componentDidMount() {
+    const { edit } = this.props;
+    if (edit) {
+      getArticle(this.changeStateArticle, edit);
+    }
+  }
+
+  changeStateArticle = article => {
+    this.setState({
+      article,
+    });
   };
 
   changeState = result => {
@@ -21,7 +38,40 @@ class ArticleForm extends Component {
     });
   };
 
+  initialData = (edit, article) => {
+    if (edit) {
+      return {
+        short_title: `${article.short_title}`,
+        short_description: `${article.short_description}`,
+        preview_image: `${article.preview_image}`,
+        paragraph1: `${article.paragraph1}`,
+        paragraph2: `${article.paragraph2}`,
+        paragraph3: `${article.paragraph3}`,
+        paragraph4: `${article.paragraph4}`,
+        image1: '',
+        image2: '',
+        image3: '',
+      };
+    } else {
+      return {
+        short_title: '',
+        short_description: '',
+        preview_image: '',
+        paragraph1: '',
+        paragraph2: '',
+        paragraph3: '',
+        paragraph4: '',
+        image1: '',
+        image2: '',
+        image3: '',
+      };
+    }
+  };
+
   render() {
+    const { edit } = this.props;
+    const { article } = this.state;
+    console.log(article);
     return (
       <UserContextConsumer>
         {context => {
@@ -29,18 +79,8 @@ class ArticleForm extends Component {
           const { id } = context.user;
           return (
             <Formik
-              initialValues={{
-                short_title: '',
-                short_description: '',
-                preview_image: '',
-                paragraph1: '',
-                paragraph2: '',
-                paragraph3: '',
-                paragraph4: '',
-                image1: '',
-                image2: '',
-                image3: '',
-              }}
+              enableReinitialize
+              initialValues={this.initialData(edit, article)}
               onSubmit={(values, { setSubmitting }) => {
                 const { base64URL } = this.state;
                 let data = values;
@@ -48,7 +88,11 @@ class ArticleForm extends Component {
                 data.image1 = base64URL[1];
                 data.image2 = base64URL[2];
                 data.image3 = base64URL[3];
-                addArticle(id, pageType, data);
+                if (edit) {
+                  editArticle(edit, pageType, data);
+                } else {
+                  addArticle(id, pageType, data);
+                }
                 setSubmitting(false);
               }}
             >
@@ -63,125 +107,108 @@ class ArticleForm extends Component {
                 <form onSubmit={handleSubmit}>
                   <Row>
                     <Col md="12">
-                      <StyledInput
-                        type="text"
-                        name="short_title"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.short_title}
-                        placeholder="Krótki tytuł"
-                        required
-                      />
+                      <StyledCard>
+                        <Label>Ogólne:</Label>
+                        <StyledInput
+                          type="text"
+                          name="short_title"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.short_title}
+                          placeholder="Krótki tytuł"
+                          required
+                        />
+                        <StyledInput
+                          type="text"
+                          name="short_description"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.short_description}
+                          placeholder="Krótki opis"
+                          required
+                        />
+                        <Label for="preview_image">Miniaturka</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="preview_image"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+                      </StyledCard>
                     </Col>
                     <Col md="12">
-                      <StyledInput
-                        type="text"
-                        name="short_description"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.short_description}
-                        placeholder="Krótki opis"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <Label for="preview_image">Miniaturka</Label>
-                      <StyledInput
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        name="preview_image"
-                        onBlur={handleBlur}
-                        onChange={e => convertToBase64(e, this.state, this.changeState)}
-                        required
-                      />
-                    </Col>
-                    <p className="mt-4">Paragraf:</p>
-                    <Col md="12">
-                      <StyledInput
-                        as="textarea"
-                        className="form-control"
-                        type="text"
-                        name="paragraph1"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.paragraph1}
-                        placeholder="Paragraf wyróżniony"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <StyledInput
-                        as="textarea"
-                        className="form-control"
-                        type="text"
-                        name="paragraph2"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.paragraph2}
-                        placeholder="Paragraf"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <Label for="image1">Zdjęcie</Label>
-                      <StyledInput
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        name="image1"
-                        onBlur={handleBlur}
-                        onChange={e => convertToBase64(e, this.state, this.changeState)}
-                        required
-                      />
-                    </Col>
-                    <p className="mt-4">Paragraf:</p>
-                    <Col md="12">
-                      <StyledInput
-                        as="textarea"
-                        className="form-control"
-                        type="text"
-                        name="paragraph3"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.paragraph3}
-                        placeholder="Paragraf"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <Label for="image2">Zdjęcie</Label>
-                      <StyledInput
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        name="image2"
-                        onBlur={handleBlur}
-                        onChange={e => convertToBase64(e, this.state, this.changeState)}
-                        required
-                      />
-                    </Col>
-                    <p className="mt-4">Paragraf:</p>
-                    <Col md="12">
-                      <StyledInput
-                        as="textarea"
-                        className="form-control"
-                        type="text"
-                        name="paragraph4"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.paragraph4}
-                        placeholder="Paragraf"
-                        required
-                      />
-                    </Col>
-                    <Col md="12">
-                      <Label for="image3">Zdjęcie</Label>
-                      <StyledInput
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        name="image3"
-                        onBlur={handleBlur}
-                        onChange={e => convertToBase64(e, this.state, this.changeState)}
-                        required
-                      />
+                      <StyledCard>
+                        <Label>Treści:</Label>
+                        <StyledInput
+                          as="textarea"
+                          className="form-control"
+                          type="text"
+                          name="paragraph1"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.paragraph1}
+                          placeholder="Paragraf wyróżniony"
+                          required
+                        />
+
+                        <StyledInput
+                          as="textarea"
+                          className="form-control"
+                          type="text"
+                          name="paragraph2"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.paragraph2}
+                          placeholder="Paragraf"
+                          required
+                        />
+
+                        <Label for="image1">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image1"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <StyledInput
+                          as="textarea"
+                          className="form-control"
+                          type="text"
+                          name="paragraph3"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.paragraph3}
+                          placeholder="Paragraf"
+                          required
+                        />
+
+                        <Label for="image2">Zdjęcie</Label>
+                        <StyledInput
+                          type="file"
+                          accept="image/png, image/jpeg"
+                          name="image2"
+                          onBlur={handleBlur}
+                          onChange={e => convertToBase64(e, this.state, this.changeState)}
+                          required
+                        />
+
+                        <StyledInput
+                          as="textarea"
+                          className="form-control"
+                          type="text"
+                          name="paragraph4"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.paragraph4}
+                          placeholder="Paragraf"
+                          required
+                        />
+                      </StyledCard>
                     </Col>
                     <Col>
                       <Button color="info" type="submit" disabled={isSubmitting}>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components/macro';
 
 const PreloaderWrap = styled.div`
@@ -23,30 +23,21 @@ const PreloaderWrap = styled.div`
     `}
 `;
 
-class Preloader extends Component {
-  state = {
-    loading: false,
-  };
+const Preloader = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  componentDidMount() {
-    this.removePreloader();
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 2000);
+  }, []);
 
-  removePreloader = () => {
-    this.setState({
-      loading: true,
-    });
-  };
-
-  render() {
-    const { loading } = this.state;
-    return (
-      <PreloaderWrap loading={loading}>
-        <div className="spinner-border text-info" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </PreloaderWrap>
-    );
-  }
-}
+  return (
+    <PreloaderWrap loading={isLoaded}>
+      <div className="spinner-border text-info" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </PreloaderWrap>
+  );
+};
 export default Preloader;

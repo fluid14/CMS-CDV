@@ -29,46 +29,46 @@ const LayoutName = styled.p`
 `;
 
 class NewArticleView extends Component {
-  chooseRenderForm(id) {
+  chooseRenderForm(id, articleId) {
     switch (id) {
-      case 'gallery':
-        return <GalleryForm />;
-      case 'tiles':
-        return <HeroForm />;
-      case 'simple-text':
-        return <SimpleTextForm />;
-      case 'quotation':
-        return <IlustratedArticleForm />;
-      case 'slider':
-        return <SliderForm />;
+      case 'gallery_page':
+        return <GalleryForm edit={articleId} />;
+      case 'hero_page':
+        return <HeroForm edit={articleId} />;
+      case 'simple_page':
+        return <SimpleTextForm edit={articleId} />;
+      case 'ilustrated_page':
+        return <IlustratedArticleForm edit={articleId} />;
+      case 'big_slider_page':
+        return <SliderForm edit={articleId} />;
       case 'article':
-        return <ArticleForm />;
-      case 'article-tiles':
-        return <ArticleTilesForm />;
-      case 'article-bottom-tiles':
-        return <ArticleBottomTileForm />;
+        return <ArticleForm edit={articleId} />;
+      case 'tiled_article_page':
+        return <ArticleTilesForm edit={articleId} />;
+      case 'bottom_tiled_page':
+        return <ArticleBottomTileForm edit={articleId} />;
       default:
-        return <ArticleForm />;
+        return <ArticleForm edit={articleId} />;
     }
   }
 
   formName(id) {
     switch (id) {
-      case 'gallery':
+      case 'gallery_page':
         return 'Galeria';
-      case 'tiles':
+      case 'hero_page':
         return 'Kafelki';
-      case 'simple-text':
+      case 'simple_page':
         return 'Prosty tekst';
-      case 'quotation':
+      case 'ilustrated_page':
         return 'Cytat';
-      case 'slider':
+      case 'big_slider_page':
         return 'Duży slider';
       case 'article':
         return 'Artykuł';
-      case 'article-tiles':
+      case 'tiled_article_page':
         return 'Artykuł z kafelkami';
-      case 'article-bottom-tiles':
+      case 'bottom_tiled_page':
         return 'Artykuł z kafelkiem u dołu';
       default:
         return 'Artykuł';
@@ -78,19 +78,26 @@ class NewArticleView extends Component {
   render() {
     const {
       match: {
-        params: { id },
+        params: { id, articleId },
       },
     } = this.props;
     return (
       <MainTemplate>
         <WithoutHeroImg>
           <StyledContainer>
-            <Title className="mb-2">
-              <>Nowy artykuł</>
-            </Title>
+            {!articleId && (
+              <Title className="mb-2">
+                <>Nowy artykuł</>
+              </Title>
+            )}
+            {articleId && (
+              <Title className="mb-2">
+                <>Edytuj artykuł</>
+              </Title>
+            )}
             <LayoutName>{this.formName(id)}</LayoutName>
             <Row>
-              <Container>{this.chooseRenderForm(id)}</Container>
+              <Container>{this.chooseRenderForm(id, articleId)}</Container>
             </Row>
           </StyledContainer>
         </WithoutHeroImg>

@@ -64,14 +64,23 @@ class AllArticlesView extends Component {
             <Row>
               <Col sm="6">
                 {articles.map(article => {
+                  console.log(article);
                   return (
                     <StyledCard body key={article.id}>
                       <CardTitle className="font-weight-bold">{article.title}</CardTitle>
                       <ButtonGroup size="md">
-                        <Button tag={Link} to={`/blog/article/${article.id}`} color="info">
+                        <Button
+                          tag={Link}
+                          to={`/blog/${article.page_type}/${article.id}`}
+                          color="info"
+                        >
                           Wyświetl
                         </Button>
-                        <Button tag={Link} to={`/blog/edit/${article.id}`} color="info">
+                        <Button
+                          tag={Link}
+                          to={`/new/${article.page_type}/${article.id}`}
+                          color="info"
+                        >
                           Edycja
                         </Button>
                         <Button onClick={() => this.deleteArticle(article.id)} color="info">
