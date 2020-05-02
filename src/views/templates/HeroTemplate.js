@@ -4,10 +4,9 @@ import MainTemplate from 'templates/MainTemplate';
 import { Container, Row, Col } from 'reactstrap';
 import HeroImage from 'components/Image/HeroImage';
 import SectionWrap from 'components/Helpers/SectionWrap';
-import MainTitle from 'components/text/MainTitle/MainTitle';
 import Paragraph from 'components/text/Paragraph/Paragraph';
 import Image from 'components/Image/Image';
-import axios from 'axios';
+import getArticle from './getArticle';
 
 const StyledImage = styled(Image)`
   margin-bottom: 2em;
@@ -29,15 +28,14 @@ class HeroTemplate extends Component {
       },
     } = this.props;
 
-    axios
-      .get(`http://127.0.0.1:5000/article/${id}`)
-      .then(article => {
-        this.setState({
-          article: article.data.content,
-        });
-      })
-      .catch(err => console.log(err));
+    getArticle(this.changeState, id);
   }
+
+  changeState = article => {
+    this.setState({
+      article,
+    });
+  };
 
   render() {
     const { article } = this.state;
@@ -58,13 +56,13 @@ class HeroTemplate extends Component {
                   </StyledParagraph>
                 </Col>
                 <Col md="4" className="mt-5">
-                  <StyledImage src={article.image1} />
+                  <StyledImage src={article.image2} />
                   <StyledParagraph>
-                    <>{article.paragraph1}</>
+                    <>{article.paragraph2}</>
                   </StyledParagraph>
                 </Col>
                 <Col md="4" className="mt-5">
-                  <StyledImage src={article.image2} />
+                  <StyledImage src={article.image3} />
                   <StyledParagraph>
                     <>{article.paragraph3}</>
                   </StyledParagraph>

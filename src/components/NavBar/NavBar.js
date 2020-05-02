@@ -31,6 +31,11 @@ const StyledNavbarText = styled(NavbarText)`
   }
 `;
 
+const StyledNvItem = styled(NavItem)`
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+`;
+
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
@@ -56,21 +61,21 @@ const NavBar = () => {
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="mr-auto" navbar>
-                <NavItem>
+                <StyledNvItem>
                   <NavLink tag={Link} to="/blog">
                     Blog
                   </NavLink>
-                </NavItem>
-                <NavItem>
+                </StyledNvItem>
+                <StyledNvItem>
                   <NavLink tag={Link} to="/about">
                     O nas
                   </NavLink>
-                </NavItem>
-                <NavItem>
+                </StyledNvItem>
+                <StyledNvItem>
                   <NavLink tag={Link} to="/contact">
                     Kontakt
                   </NavLink>
-                </NavItem>
+                </StyledNvItem>
               </Nav>
               {userName && (
                 <>

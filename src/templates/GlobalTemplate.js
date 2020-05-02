@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import GlobalStyle from 'theme/GlobalStyle';
 import theme from 'theme/theme';
 import { ThemeProvider } from 'styled-components/macro';
+import Preloader from '../components/Preloader/Preloader';
 
 class GlobalTemplate extends Component {
   state = {

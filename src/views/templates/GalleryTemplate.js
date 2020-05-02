@@ -7,7 +7,7 @@ import Paragraph from 'components/text/Paragraph/Paragraph';
 import Gallery from 'components/Gallery/Gallery';
 import WithoutHeroImg from 'components/Helpers/WithoutHeroImg';
 import HeroImage from 'components/Image/HeroImage';
-import axios from 'axios';
+import getArticle from './getArticle';
 
 class GalleryTemplate extends Component {
   state = {
@@ -21,15 +21,14 @@ class GalleryTemplate extends Component {
       },
     } = this.props;
 
-    axios
-      .get(`http://127.0.0.1:5000/article/${id}`)
-      .then(article => {
-        this.setState({
-          article: article.data.content,
-        });
-      })
-      .catch(err => console.log(err));
+    getArticle(this.changeState, id);
   }
+
+  changeState = article => {
+    this.setState({
+      article,
+    });
+  };
 
   render() {
     const { article } = this.state;
@@ -53,7 +52,6 @@ class GalleryTemplate extends Component {
               <SectionWrap>
                 <Gallery
                   gallery={[
-                    article.image1,
                     article.image2,
                     article.image3,
                     article.image4,

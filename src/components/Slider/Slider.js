@@ -10,7 +10,6 @@ const SlideTitle = styled.p`
   color: #ffffff;
   font-size: 14px;
   background-color: #000;
-  font-size: 700;
   padding: 10px 20px;
 `;
 
@@ -21,6 +20,9 @@ class Slider extends React.Component {
       direction: 'horizontal',
       loop: true,
       slidesPerView: 'auto',
+      observer: true,
+      observeSlideChildren: true,
+      rebuildOnUpdate: true,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -39,6 +41,7 @@ class Slider extends React.Component {
         <div className="swiper-wrapper">
           {data.map(item => {
             const { url, title } = item;
+            console.log(item);
             return (
               <Col key={title} md="3" className="swiper-slide mb-5">
                 <Image src={url} />

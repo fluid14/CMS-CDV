@@ -16,7 +16,7 @@ const Gallery = ({ gallery }) => (
   <GalleryWrap>
     <StyledRow>
       {gallery.map(img => (
-        <Col sm="3">
+        <Col sm="3" className="mb-4">
           <Image src={img} />
         </Col>
       ))}
