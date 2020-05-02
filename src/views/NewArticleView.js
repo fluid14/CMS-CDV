@@ -29,26 +29,26 @@ const LayoutName = styled.p`
 `;
 
 class NewArticleView extends Component {
-  chooseRenderForm(id, articleId) {
+  chooseRenderForm(id, articleId, history) {
     switch (id) {
       case 'gallery_page':
-        return <GalleryForm edit={articleId} />;
+        return <GalleryForm edit={articleId} history={history} />;
       case 'hero_page':
-        return <HeroForm edit={articleId} />;
+        return <HeroForm edit={articleId} history={history} />;
       case 'simple_page':
-        return <SimpleTextForm edit={articleId} />;
+        return <SimpleTextForm edit={articleId} history={history} />;
       case 'ilustrated_page':
-        return <IlustratedArticleForm edit={articleId} />;
+        return <IlustratedArticleForm edit={articleId} history={history} />;
       case 'big_slider_page':
-        return <SliderForm edit={articleId} />;
+        return <SliderForm edit={articleId} history={history} />;
       case 'article':
-        return <ArticleForm edit={articleId} />;
+        return <ArticleForm edit={articleId} history={history} />;
       case 'tiled_article_page':
-        return <ArticleTilesForm edit={articleId} />;
+        return <ArticleTilesForm edit={articleId} history={history} />;
       case 'bottom_tiled_page':
-        return <ArticleBottomTileForm edit={articleId} />;
+        return <ArticleBottomTileForm edit={articleId} history={history} />;
       default:
-        return <ArticleForm edit={articleId} />;
+        return <ArticleForm edit={articleId} history={history} />;
     }
   }
 
@@ -77,6 +77,7 @@ class NewArticleView extends Component {
 
   render() {
     const {
+      history,
       match: {
         params: { id, articleId },
       },
@@ -97,7 +98,7 @@ class NewArticleView extends Component {
             )}
             <LayoutName>{this.formName(id)}</LayoutName>
             <Row>
-              <Container>{this.chooseRenderForm(id, articleId)}</Container>
+              <Container>{this.chooseRenderForm(id, articleId, history)}</Container>
             </Row>
           </StyledContainer>
         </WithoutHeroImg>

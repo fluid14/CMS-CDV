@@ -8,9 +8,11 @@ import convertToBase64 from './convertToBase64';
 import getArticle from '../templates/getArticle';
 import editArticle from './editArticle';
 import StyledCard from '../../components/StyledCard/StyledCard';
+import PreloaderNewArticle from '../../components/Preloader/PreloaderNewArticle';
 
 class ArticleTilesForm extends Component {
   state = {
+    preloader: false,
     file: null,
     base64URL: [],
     article: {},
@@ -22,6 +24,12 @@ class ArticleTilesForm extends Component {
       getArticle(this.changeStateArticle, edit);
     }
   }
+
+  showPreloader = () => {
+    this.setState({
+      preloader: true,
+    });
+  };
 
   changeStateArticle = article => {
     this.setState({
@@ -75,8 +83,8 @@ class ArticleTilesForm extends Component {
   };
 
   render() {
-    const { edit } = this.props;
-    const { article } = this.state;
+    const { edit, history } = this.props;
+    const { article, preloader } = this.state;
     console.log(article);
     return (
       <UserContextConsumer>
@@ -96,9 +104,9 @@ class ArticleTilesForm extends Component {
                 data.tile_image2 = base64URL[3];
                 data.tile_image3 = base64URL[4];
                 if (edit) {
-                  editArticle(edit, pageType, data);
+                  editArticle(edit, pageType, data, history);
                 } else {
-                  addArticle(id, pageType, data);
+                  addArticle(id, pageType, data, history);
                 }
                 setSubmitting(false);
               }}
@@ -257,9 +265,15 @@ class ArticleTilesForm extends Component {
                       </StyledCard>
                     </Col>
                     <Col>
-                      <Button color="info" type="submit" disabled={isSubmitting}>
+                      <Button
+                        color="info"
+                        onClick={this.showPreloader}
+                        type="submit"
+                        disabled={isSubmitting}
+                      >
                         Dodaj
                       </Button>
+                      {preloader && <PreloaderNewArticle />}
                     </Col>
                   </Row>
                 </form>

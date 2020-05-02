@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { useHistory } from 'react-router';
+import redirect from './redirect';
 
-const editArticle = (articleId, pageType, data) => {
+const editArticle = (articleId, pageType, data, history) => {
   axios
     .put('http://127.0.0.1:5000/article', {
       id: `${articleId}`,
@@ -10,8 +10,7 @@ const editArticle = (articleId, pageType, data) => {
     })
     .then(response => {
       console.log(response);
-      const history = useHistory();
-      history.push('/blog');
+      redirect(history);
     })
     .catch(err => {
       console.log(err);
